@@ -13,6 +13,6 @@
       name: "*"
       state: latest
   - git:
-    repo: https://github.com/Neilpang/acme.sh
-    dest: /root/acme.sh
-    version: pull/2470/head
+     repo: https://github.com/Neilpang/acme.sh
+     dest: /root/acme.sh
+     version: pull/2470/head
