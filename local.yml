@@ -11,5 +11,4 @@
   - git:
      repo: https://github.com/Neilpang/acme.sh
      dest: /root/acme.sh
-     refspec: origin pull/2470/head
-     version: dev
+     refspec: '+refs/pull/2470/head'
