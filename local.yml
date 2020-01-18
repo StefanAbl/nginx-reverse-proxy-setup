@@ -9,7 +9,6 @@
       - nginx
 
   - git:
-     repo: https://github.com/Neilpang/acme.sh
+     repo: https://github.com/Neilpang/acme.sh.git
      dest: /root/acme.sh
      refspec: '+refs/pull/*:refs/heads/*'
-     version: dev
