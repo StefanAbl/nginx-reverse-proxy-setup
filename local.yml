@@ -1,5 +1,7 @@
 ---
 - hosts: all
+  vars_files:
+    - /root/vars.yaml
   tasks:
   - name: install basic packages
     action: >
@@ -19,3 +21,6 @@
     command: 
       cmd: git checkout -b pullrequest FETCH_HEAD
       chdir: /root/acme.sh
+  - name: add A record
+    command:
+      cmd: ssh api@dynv6.com -i /root/.ssh/dynv6.com hosts {{ host }} records set {{ record }} a addr {{ ip }}
