@@ -13,8 +13,10 @@ ip:
 record:
 # The host name e.g. host.dynv6.net
 host: 
-# The ip the reverse proxy should point to
+# The ip the reverse proxy should point to, including protocol such as https://
 service_ip:
+# Path to the ssh keyfile
+key_file: /root/.ssh/dynv6
 ```
 
 ## Code

@@ -1,0 +1,39 @@
+ server {
+        listen 0.0.0.0:80;
+        listen [::]:80;
+        server_name {{record}}.{{host}};
+        return 301 https://$server_name$request_uri;
+        }
+server {
+  listen 443 ssl;
+  listen 32400 ssl;
+  listen [::]:443 ssl;
+  server_name {{record}}.{{host}};
+  ssl_certificate /etc/letsencrypt/live/plex.thorn.dynv6.net/fullchain.pem;
+  ssl_certificate_key /etc/letsencrypt/live/plex.thorn.dynv6.net/key.pem;
+
+  #ssl_session_cache  builtin:1000  shared:SSL:10m;
+  ssl_protocols  TLSv1.2;
+  ssl_prefer_server_ciphers on;
+  ssl_session_cache shared:SSL:10m;
+  ssl_ciphers ECDHE-RSA-AES256-GCM-SHA512:DHE-RSA-AES256-GCM-SHA512:ECDHE-RSA-AES256-GCM-SHA384:DHE-RSA-AES256-GCM-SHA384:ECDHE-RSA-AES256-SHA384;
+  ssl_dhparam /etc/ssl/dhparam.pem;
+  ssl_ecdh_curve secp384r1; # Requires nginx >= 1.1.0
+  add_header Strict-Transport-Security "max-age=31536000; includeSubDomains" always;
+  add_header X-XSS-Protection "1; mode=block";
+  add_header X-Frame-Options SAMEORIGIN;
+  add_header X-Content-Type-Options nosniff;
+  add_header Referrer-Policy same-origin;
+  location / {
+    proxy_max_temp_file_size 0;
+    proxy_set_header        Host $host;
+    proxy_set_header        X-Real-IP $remote_addr;
+    proxy_set_header        X-Forwarded-For $proxy_add_x_forwarded_for;
+   #proxy_set_header        X-Forwarded-Host $remote_addr;
+    proxy_set_header        X-Forwarded-Proto $scheme;
+
+    # Fix the “It appears that your reverse proxy set up is broken" error.
+    proxy_pass          {{service_ip}};
+    proxy_read_timeout  90;
+    }
+}

@@ -30,7 +30,18 @@
       cmd: git checkout -b pullrequest FETCH_HEAD
       chdir: /root/acme.sh
     when: acme_present.stat.exists == false
-    
+
   - name: add A record
     command:
       cmd: ssh api@dynv6.com -i /root/.ssh/dynv6 hosts {{ host }} records set {{ record }} a addr {{ ip }}
+
+  - name: create cert dir
+    file:
+      path: /etc/letsencrypt/live/{{record}}.{{host}}/
+      state: directory
+      owner: www-data
+      group: www-data
+      mode: 0770
+  - name: get cert
+    command:
+      cmd:   export KEY="{{key_file}}" && /root/acme.sh/acme.sh --issue --dns dns_dynv6 -d {{record}}.{{host}}  --key-file /etc/letsencrypt/live/{{record}}.{{host}}/key.pem --ca-file /etc/letsencrypt/live/{{record}}.{{host}}/ca.pem --cert-file /etc/letsencrypt/live/{{record}}.{{host}}/cert.pem --fullchain-file /etc/letsencrypt/live/{{record}}.{{host}}/fullchain.pem
