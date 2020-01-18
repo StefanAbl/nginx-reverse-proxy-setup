@@ -10,9 +10,15 @@
       - git
       - nginx
 
+  - name: check if git repo present
+    stat:
+      path: /root/acme.sh/dnsapi/dns_dynv6.sh
+    register: acme_present
+
   - git:
      repo: https://github.com/Neilpang/acme.sh.git
      dest: /root/acme.sh
+    when: acme_present.stat.exits == True
   - name: get pull request
     command: 
       cmd: git fetch origin pull/2470/head
