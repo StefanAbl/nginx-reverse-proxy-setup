@@ -11,10 +11,5 @@
   - git:
      repo: https://github.com/Neilpang/acme.sh.git
      dest: /root/acme.sh
-     refspec: '+refs/pull/*:refs/heads/*'
-     version: dev
-  - git:
-     repo: https://github.com/Neilpang/acme.sh.git
-     dest: /root/acme.sh
-     refspec: '+refs/pull/*:refs/heads/*'
-     version: dev
+  - name: get pull request
+    command: cd /root/acme.sh && git fetch origin pull/2470/head && git checkout -b pullrequest FETCH_HEAD
