@@ -26,6 +26,7 @@
       cmd: git checkout -b pullrequest FETCH_HEAD
       chdir: /root/acme.sh
     when: acme_present.stat.exists == false
+    
   - name: add A record
     command:
       cmd: ssh api@dynv6.com -i /root/.ssh/dynv6 hosts {{ host }} records set {{ record }} a addr {{ ip }}
