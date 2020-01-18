@@ -1,0 +1,18 @@
+---
+- hosts: all
+  tasks:
+  - name: install basic packages
+    action: >
+      {{ ansible_pkg_mgr }} name={{ item }} state=present update_cache=yes
+    with_items:
+      - git
+      - nginx
+
+  - name: Upgrade all packages to the latest version
+    apt:
+      name: "*"
+      state: latest
+  - git:
+    repo: https://github.com/Neilpang/acme.sh
+    dest: /root/acme.sh
+    version: pull/2470/head
