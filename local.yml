@@ -12,8 +12,10 @@
      repo: https://github.com/Neilpang/acme.sh.git
      dest: /root/acme.sh
   - name: get pull request
-    command: git fetch origin pull/2470/head && git checkout -b pullrequest FETCH_HEAD
+    command: 
+      cmd: git fetch origin pull/2470/head
       chdir: /root/acme.sh
   - name: get pull request2
-    command: git checkout -b pullrequest FETCH_HEAD
+    command: 
+      cmd: git checkout -b pullrequest FETCH_HEAD
       chdir: /root/acme.sh
