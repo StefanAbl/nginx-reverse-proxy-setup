@@ -8,10 +8,6 @@
       - git
       - nginx
 
-  - name: Upgrade all packages to the latest version
-    apt:
-      name: "*"
-      state: latest
   - git:
      repo: https://github.com/Neilpang/acme.sh
      dest: /root/acme.sh
