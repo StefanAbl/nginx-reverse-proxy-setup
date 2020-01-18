@@ -23,4 +23,4 @@
       chdir: /root/acme.sh
   - name: add A record
     command:
-      cmd: ssh api@dynv6.com -i /root/.ssh/dynv6.com hosts {{ host }} records set {{ record }} a addr {{ ip }}
+      cmd: ssh api@dynv6.com -i /root/.ssh/dynv6 hosts {{ host }} records set {{ record }} a addr {{ ip }}
