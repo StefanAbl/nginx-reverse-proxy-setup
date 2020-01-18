@@ -18,7 +18,7 @@
   - git:
      repo: https://github.com/Neilpang/acme.sh.git
      dest: /root/acme.sh
-    when: acme_present.stat.exits == True
+    when: acme_present.stat.exists == true
   - name: get pull request
     command: 
       cmd: git fetch origin pull/2470/head
