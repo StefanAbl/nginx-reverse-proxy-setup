@@ -9,6 +9,7 @@
     with_items:
       - git
       - nginx
+      - python-pip
 
   - easy_install:
       name: pip
