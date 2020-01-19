@@ -88,6 +88,8 @@
     find: 
       paths: /etc/nginx/sites-enabled/
     register: config_files
+  - debug:
+      var: config_files
 
   - name: remove default config
     file:
