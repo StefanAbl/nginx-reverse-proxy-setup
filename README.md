@@ -1,7 +1,7 @@
 # nginx-reverse-proxy-setup
  
 ## Prequisits
-install ansible and git
+install ansible>=2.9 and git
 Generate ssh key for authentication with dynv6.com
 add this key to dynv6.com
 place the required variables in /root/vars.yaml
@@ -22,7 +22,10 @@ key_file: /root/.ssh/dynv6
 ## Code
 ```
 apt-get update
-apt-get install ansible git nano
+apt-get install -y software-properties-common
+apt-add-repository --yes --update ppa:ansible/ansible
+apt-get update
+apt-get install -y ansible git nano
 ssh-keygen -f "/root/.ssh/dynv6" -t ssh-ed25519 -N ''
 cat /root/.ssh/dynv6.pub
 nano /root/vars.yaml
