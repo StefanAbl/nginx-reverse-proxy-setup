@@ -9,11 +9,12 @@
     with_items:
       - git
       - nginx
+
   - easy_install:
-    name: pip
-    state: latest
+      name: pip
+      state: latest
   - pip:
-    name: PyOpenSSL>=0.15
+      name: PyOpenSSL>=0.15
 
   - name: check if git repo present
     stat:
