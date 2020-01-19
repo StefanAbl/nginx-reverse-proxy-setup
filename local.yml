@@ -70,6 +70,10 @@
     when: cert_present.stat.exists == false
     register: command_result
     failed_when: not "'--force' in command_result.stdout"
+  - debug:
+      var: cert_present.stat.exists
+  - debug:
+      var: command_result
 
   - name: create dh dir
     file:
