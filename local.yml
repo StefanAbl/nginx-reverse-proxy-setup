@@ -96,9 +96,9 @@
     file:
       path: /etc/nginx/sites-enabled/default
       state: absent
-    when: default_present.stat.exists = true
+    when: default_present.stat.exists == true
   
-    
+
 
   - name: copy nginx config template
     template:
