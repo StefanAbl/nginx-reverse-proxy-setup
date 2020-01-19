@@ -86,7 +86,7 @@
     register: default_present
   - name: check if any config present
     find: 
-      paths: '/etc/nginx/sites-enabled/*'
+      paths: '/etc/nginx/sites-available/'
     register: config_files
   - debug:
       var: config_files
