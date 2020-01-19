@@ -89,7 +89,9 @@
       paths: '/etc/nginx/sites-available/'
     register: config_files
   - debug:
-      var: config_files
+    var: config_files
+  - debug:
+    var: default_present
 
   - name: remove default config
     file:
