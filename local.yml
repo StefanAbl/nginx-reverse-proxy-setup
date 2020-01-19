@@ -55,19 +55,19 @@
       path: /etc/letsencrypt/live/{{record}}.{{host}}/fullchain.pem
     register: cert_present
 
-  - name: check if cert needs to be renewd
-    openssl_certificate_info:
-      path: /etc/letsencrypt/live/{{record}}.{{host}}/fullchain.pem
-      valid_at: 
-        -point_1: "+d25"
-    register: cert_valid
-    when: cert_present.stat.exists == true
+  # - name: check if cert needs to be renewd
+  #   openssl_certificate_info:
+  #     path: /etc/letsencrypt/live/{{record}}.{{host}}/fullchain.pem
+  #     valid_at: 
+  #       -point_1: "+d25"
+  #   register: cert_valid
+  #   when: cert_present.stat.exists == true
 
   - name: get cert REMOVE STAGING
     command: /root/acme.sh/acme.sh --issue --staging --dns dns_dynv6 -d {{record}}.{{host}}  --key-file /etc/letsencrypt/live/{{record}}.{{host}}/key.pem --ca-file /etc/letsencrypt/live/{{record}}.{{host}}/ca.pem --cert-file /etc/letsencrypt/live/{{record}}.{{host}}/cert.pem --fullchain-file /etc/letsencrypt/live/{{record}}.{{host}}/fullchain.pem
     environment:
       KEY: "{{key_file}}"
-    when: (cert_present.stat.exists == true) or (cert-valid.valid_at.point_1 == false)
+    when: (cert_present.stat.exists == true) # or (cert-valid.valid_at.point_1 == false)
     register: command_result
     failed_when: not "'--force' in command_result.stdout"
 
