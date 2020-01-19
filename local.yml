@@ -92,6 +92,7 @@
       owner: www-data
       group: www-data
       mode: '0664'
+      force: yes
   - name: enable the nginx conf
     file:
       src: /etc/nginx/sites-available/{{record}}.{{host}}
@@ -99,8 +100,7 @@
       state: link
       owner: www-data
       group: www-data
-      mode: '0664'
-      
+      mode: '0664'      
       
   - name: add cronjob for certificates
     cron:
