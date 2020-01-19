@@ -9,14 +9,7 @@
     with_items:
       - git
       - nginx
-      - python-pip
-
-  - easy_install:
-      name: pip
-      state: latest
-  - pip:
-      name: PyOpenSSL>=0.15
-
+      
   - name: check if git repo present
     stat:
       path: /root/acme.sh/dnsapi/dns_dynv6.sh
