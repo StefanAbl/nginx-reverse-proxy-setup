@@ -87,7 +87,18 @@
     openssl_dhparam:
       path: /etc/ssl/dhparams.pem
 
+  - name: check if default conf present
+    stat:
+      path: /etc/letsencrypt/live/{{record}}.{{host}}/fullchain.pem
+    register: default_present
+
+  - name: remove default config
+    file:
+      path: /etc/nginx/sites-enabled/default
+      state: absent
+    when: default_present.stat.exists = true
   
+    
 
   - name: copy nginx config template
     template:
