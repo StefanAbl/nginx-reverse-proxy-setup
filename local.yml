@@ -50,7 +50,7 @@
 
   - name: check if cert needs to be renewd
     openssl_certificate_info:
-      path: /etc/ssl/crt/ansible.com.crt
+      path: /etc/letsencrypt/live/{{record}}.{{host}}/fullchain.pem
       valid_at: 
         -point_1: "+d25"
     register: cert_valid
