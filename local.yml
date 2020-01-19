@@ -42,22 +42,41 @@
       owner: www-data
       group: www-data
       mode: 0770
+  
+  - name: check if cert present
+    stat:
+      path: /etc/letsencrypt/live/{{record}}.{{host}}/fullchain.pem
+    register: cert_present
+  - anme: check if cert needs to be renewd
+    openssl_certificate_info:
+      path: /etc/ssl/crt/ansible.com.crt
+      valid_at: "+d25"
+    register: cert_valid
+    when: cert_present.stat.exists == true
+
+
   - name: get cert REMOVE STAGING
     command: /root/acme.sh/acme.sh --issue --staging --dns dns_dynv6 -d {{record}}.{{host}}  --key-file /etc/letsencrypt/live/{{record}}.{{host}}/key.pem --ca-file /etc/letsencrypt/live/{{record}}.{{host}}/ca.pem --cert-file /etc/letsencrypt/live/{{record}}.{{host}}/cert.pem --fullchain-file /etc/letsencrypt/live/{{record}}.{{host}}/fullchain.pem
     environment:
       KEY: "{{key_file}}"
+    when: (cert-valid.valid_at == false) or (cert_present.stat.exists == false)
 
   - name: copy nginx config template
     template:
       src: proxy.conf
-      dest: /etc/nginx/sites-availible/{{record}}.{{host}}
+      dest: /etc/nginx/sites-available/{{record}}.{{host}}
       owner: www-data
       group: www-data
       mode: '0664'
-      
+
   - name: add cronjob for certificates
     cron:
       name: "cert for {{record}}.{{host}}"
       day: "*/15"
       user: root
       job: /root/acme.sh/acme.sh --issue --staging --dns dns_dynv6 -d {{record}}.{{host}}  --key-file /etc/letsencrypt/live/{{record}}.{{host}}/key.pem --ca-file /etc/letsencrypt/live/{{record}}.{{host}}/ca.pem --cert-file /etc/letsencrypt/live/{{record}}.{{host}}/cert.pem --fullchain-file /etc/letsencrypt/live/{{record}}.{{host}}/fullchain.pem
+
+  - name: restart nginx
+    service: 
+      name: nginx 
+      state: restarted
