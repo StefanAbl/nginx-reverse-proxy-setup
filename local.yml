@@ -63,6 +63,18 @@
       KEY: "{{key_file}}"
     when: (cert-valid.valid_at.point_1 == false) or (cert_present.stat.exists == false)
 
+  - name: create dh dir
+    file:
+      path: /etc/ssl/
+      state: directory
+      owner: www-data
+      group: www-data
+      mode: 0770
+    register: dh_present
+  - name: Generate Diffie-Hellman parameters with the default size (4096 bits)
+    openssl_dhparam:
+      path: /etc/ssl/dhparams.pem
+
   - name: copy nginx config template
     template:
       src: proxy.conf
