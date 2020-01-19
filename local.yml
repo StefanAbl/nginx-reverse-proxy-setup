@@ -46,3 +46,18 @@
     command: /root/acme.sh/acme.sh --issue --staging --dns dns_dynv6 -d {{record}}.{{host}}  --key-file /etc/letsencrypt/live/{{record}}.{{host}}/key.pem --ca-file /etc/letsencrypt/live/{{record}}.{{host}}/ca.pem --cert-file /etc/letsencrypt/live/{{record}}.{{host}}/cert.pem --fullchain-file /etc/letsencrypt/live/{{record}}.{{host}}/fullchain.pem
     environment:
       KEY: "{{key_file}}"
+
+  - name: copy nginx config template
+    template:
+      src: proxy.conf
+      dest: /etc/nginx/sites-availible/{{record}}.{{host}}
+      owner: www-data
+      group: www-data
+      mode: '0664'
+      
+  - name: add cronjob for certificates
+    cron:
+      name: "cert for {{record}}.{{host}}"
+      day: "*/15"
+      user: root
+      job: /root/acme.sh/acme.sh --issue --staging --dns dns_dynv6 -d {{record}}.{{host}}  --key-file /etc/letsencrypt/live/{{record}}.{{host}}/key.pem --ca-file /etc/letsencrypt/live/{{record}}.{{host}}/ca.pem --cert-file /etc/letsencrypt/live/{{record}}.{{host}}/cert.pem --fullchain-file /etc/letsencrypt/live/{{record}}.{{host}}/fullchain.pem
