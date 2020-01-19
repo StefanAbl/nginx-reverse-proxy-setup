@@ -47,6 +47,7 @@
     stat:
       path: /etc/letsencrypt/live/{{record}}.{{host}}/fullchain.pem
     register: cert_present
+
   - name: check if cert needs to be renewd
     openssl_certificate_info:
       path: /etc/ssl/crt/ansible.com.crt
