@@ -18,6 +18,7 @@ service_ip:
 # Path to the ssh keyfile
 key_file: /root/.ssh/dynv6
 ```
+Then run ` ansible-pull -U https://github.com/StefanAbl/nginx-reverse-proxy-setup.git -i hosts`
 
 ## Code
 ```
@@ -30,3 +31,4 @@ ssh-keygen -f "/root/.ssh/dynv6" -t ssh-ed25519 -N ''
 cat /root/.ssh/dynv6.pub
 nano /root/vars.yaml
 ```
+needs to be executed as root user
