@@ -75,14 +75,6 @@
   - debug:
       var: command_result
 
-  - name: create dh dir
-    file:
-      path: /etc/ssl/
-      state: directory
-      owner: www-data
-      group: www-data
-      mode: 0770
-    register: dh_present
   - name: Generate Diffie-Hellman parameters with the default size (4096 bits)
     openssl_dhparam:
       path: /etc/ssl/dhparams.pem
