@@ -34,14 +34,6 @@
   - name: add A record
     command:
       cmd: ssh api@dynv6.com -i /root/.ssh/dynv6 hosts {{ host }} records set {{ record }} a addr {{ ip }}
-
-  - name: create cert dir
-    file:
-      path: /etc/letsencrypt/live/{{record}}.{{host}}/
-      state: directory
-      owner: www-data
-      group: www-data
-      mode: 0770
   
   - name: check if cert present
     stat:
