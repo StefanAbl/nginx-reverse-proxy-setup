@@ -37,6 +37,11 @@
   #       -point_1: "+d25"
   #   register: cert_valid
   #   when: cert_present.stat.exists == true
+  - name: Create cert dir
+    file:
+      path: /etc/letsencrypt/live/{{record}}.{{host}}
+      state: directory
+      mode: '0755'
 
   - name: get cert
     command: /root/acme.sh/acme.sh --issue --dns dns_dynv6 -d {{record}}.{{host}}  --key-file /etc/letsencrypt/live/{{record}}.{{host}}/key.pem --ca-file /etc/letsencrypt/live/{{record}}.{{host}}/ca.pem --cert-file /etc/letsencrypt/live/{{record}}.{{host}}/cert.pem --fullchain-file /etc/letsencrypt/live/{{record}}.{{host}}/fullchain.pem
