@@ -58,6 +58,7 @@
   - name: Generate Diffie-Hellman parameters with the default size (4096 bits)
     openssl_dhparam:
       path: /etc/ssl/dhparams.pem
+    when: skip_dh == false
 
   - name: check if default conf present
     stat:

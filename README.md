@@ -17,6 +17,8 @@ host:
 service_ip:
 # Path to the ssh keyfile
 key_file: /root/.ssh/dynv6
+# Skip the creation of Diphie Hellman parameters much faster less secure
+skip_dh: false
 ```
 Then run ` ansible-pull -U https://github.com/StefanAbl/nginx-reverse-proxy-setup.git -i hosts`
 
